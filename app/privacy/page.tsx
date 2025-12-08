@@ -2,11 +2,11 @@ import React from 'react';
 
 export default function PrivacyPage() {
     return (
-        <div className="min-h-screen bg-[#0a0a0a] pt-24 pb-12">
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] pt-24 pb-12">
             <div className="container mx-auto px-6 max-w-4xl">
-                <div className="p-8 md:p-12 glass-panel rounded-2xl prose prose-invert max-w-none">
+                <div className="p-8 md:p-12 glass-panel rounded-2xl prose dark:prose-invert max-w-none">
                     <h1>Privacy Policy</h1>
-                    <p className="italic text-gray-400 text-sm mb-8">
+                    <p className="italic text-gray-500 dark:text-gray-400 text-sm mb-8">
                         Disclaimer: This document is a comprehensive template generated based on EU and Slovak data protection laws.
                         It is not a substitute for professional legal advice. You must consult with a qualified legal professional to
                         ensure this policy is complete, accurate, and fully compliant with your specific business operations.
@@ -28,7 +28,7 @@ export default function PrivacyPage() {
                         <strong>Company Name:</strong> Engineers-incubator s.r.o.<br />
                         <strong>Company ID (IČO):</strong> 53 741 200<br />
                         <strong>Registered Address:</strong> Horná 67, 974 01 Banská Bystrica, Slovenská republika<br />
-                        <strong>Contact Email for Privacy Inquiries:</strong> <a href="mailto:hello@ehub.sk" className="text-blue-400 hover:text-blue-300">hello@ehub.sk</a>
+                        <strong>Contact Email for Privacy Inquiries:</strong> <a href="mailto:hello@ehub.sk" className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">hello@ehub.sk</a>
                     </p>
 
                     <h2>Article 3: Data Collection and Purpose of Processing</h2>
@@ -97,7 +97,7 @@ export default function PrivacyPage() {
                             Right to Lodge a Complaint – Supervisory Authority:<br />
                             Úrad na ochranu osobných údajov Slovenskej republiky,<br />
                             Hraničná 12, 820 07 Bratislava 27, Slovenská republika,<br />
-                            <a href="https://dataprotection.gov.sk/uoou/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">dataprotection.gov.sk/uoou</a>
+                            <a href="https://dataprotection.gov.sk/uoou/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">dataprotection.gov.sk/uoou</a>
                         </li>
                     </ul>
 

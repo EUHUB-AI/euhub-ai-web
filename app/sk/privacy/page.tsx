@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function PrivacyPageSK() {
     return (
-        <div className="min-h-screen bg-[#0a0a0a] pt-24 pb-12">
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] pt-24 pb-12">
             <div className="container mx-auto px-6 max-w-4xl">
-                <div className="p-8 md:p-12 glass-panel rounded-2xl prose prose-invert max-w-none">
+                <div className="p-8 md:p-12 glass-panel rounded-2xl prose dark:prose-invert max-w-none">
                     <h1>Politika ochrany osobných údajov</h1>
 
                     <h2>Článok 1: Úvod a rozsah</h2>
@@ -23,7 +23,7 @@ export default function PrivacyPageSK() {
                         <strong>Názov spoločnosti:</strong> Engineers-incubator s.r.o.<br />
                         <strong>Identifikačné číslo spoločnosti (IČO):</strong> 53 741 200<br />
                         <strong>Sídlo:</strong> Horná 67, 974 01 Banská Bystrica, Slovenská republika<br />
-                        <strong>Kontaktný e-mail:</strong> <a href="mailto:hello@ehub.sk" className="text-blue-400 hover:text-blue-300">hello@ehub.sk</a>
+                        <strong>Kontaktný e-mail:</strong> <a href="mailto:hello@ehub.sk" className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">hello@ehub.sk</a>
                     </p>
 
                     <h2>Článok 3: Zhromažďovanie údajov a účel spracúvania</h2>
@@ -90,7 +90,7 @@ export default function PrivacyPageSK() {
                             Právo podať sťažnosť –<br />
                             Úrad na ochranu osobných údajov Slovenskej republiky,<br />
                             Hraničná 12, 820 07 Bratislava 27, Slovenská republika,<br />
-                            <a href="https://dataprotection.gov.sk/uoou/" target="_blank" rel="noopener noreferrer" className="text-blue-400 hover:text-blue-300">dataprotection.gov.sk/uoou</a>
+                            <a href="https://dataprotection.gov.sk/uoou/" target="_blank" rel="noopener noreferrer" className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">dataprotection.gov.sk/uoou</a>
                         </li>
                     </ul>
 

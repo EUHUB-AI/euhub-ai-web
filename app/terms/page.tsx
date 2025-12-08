@@ -3,9 +3,9 @@ import Link from 'next/link';
 
 export default function TermsPage() {
     return (
-        <div className="min-h-screen bg-[#0a0a0a] pt-24 pb-12">
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] pt-24 pb-12">
             <div className="container mx-auto px-6 max-w-4xl">
-                <div className="p-8 md:p-12 glass-panel rounded-2xl prose prose-invert max-w-none">
+                <div className="p-8 md:p-12 glass-panel rounded-2xl prose dark:prose-invert max-w-none">
                     <h1>Terms and Conditions for euhub.sk</h1>
                     <p className="lead">Effective Date: September 23, 2025</p>
 
@@ -71,7 +71,7 @@ export default function TermsPage() {
                     <p>
                         <strong>Company:</strong> Engineers-incubator s.r.o.<br />
                         <strong>Address:</strong> Horná 67, 974 01 Banská Bystrica, Slovenská republika<br />
-                        <strong>Email:</strong> <a href="mailto:hello@ehub.sk" className="text-blue-400 hover:text-blue-300">hello@ehub.sk</a>
+                        <strong>Email:</strong> <a href="mailto:hello@ehub.sk" className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">hello@ehub.sk</a>
                     </p>
                 </div>
             </div>

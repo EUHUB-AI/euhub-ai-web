@@ -1,9 +1,44 @@
 @import "tailwindcss";
 @plugin "@tailwindcss/typography";
+@variant dark (&:where(.dark, .dark *));
 
-:root {
+/* Dark theme (default) */
+:root,
+.dark {
   --background: #0a0a0a;
   --foreground: #ededed;
+  --muted: #9ca3af;
+  --muted-foreground: #6b7280;
+  --card: rgba(255, 255, 255, 0.03);
+  --card-border: rgba(255, 255, 255, 0.05);
+  --header-bg: rgba(0, 0, 0, 0.5);
+  --accent: #3b82f6;
+  --accent-hover: #60a5fa;
+  --section-bg: rgba(0, 0, 0, 0.5);
+  --footer-bg: #000000;
+  --input-bg: rgba(255, 255, 255, 0.05);
+  --input-border: rgba(255, 255, 255, 0.1);
+  --badge-bg: rgba(255, 255, 255, 0.05);
+  --badge-border: rgba(255, 255, 255, 0.1);
+}
+
+/* Light theme */
+.light {
+  --background: #ffffff;
+  --foreground: #1a1a1a;
+  --muted: #6b7280;
+  --muted-foreground: #9ca3af;
+  --card: rgba(255, 255, 255, 0.95);
+  --card-border: rgba(0, 0, 0, 0.1);
+  --header-bg: rgba(255, 255, 255, 0.9);
+  --accent: #2563eb;
+  --accent-hover: #1d4ed8;
+  --section-bg: rgba(249, 250, 251, 0.9);
+  --footer-bg: #f9fafb;
+  --input-bg: #f9fafb;
+  --input-border: rgba(0, 0, 0, 0.15);
+  --badge-bg: #f3f4f6;
+  --badge-border: rgba(0, 0, 0, 0.1);
 }
 
 body {
@@ -11,6 +46,7 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 @layer utilities {
@@ -21,11 +57,39 @@ body {
 
 /* Custom Gradients & Effects */
 .glass-panel {
-  background: rgba(255, 255, 255, 0.03);
+  background: var(--card);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  border: 1px solid var(--card-border);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
-.hero-gradient {
+.light .glass-panel {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+}
+
+.dark .hero-gradient {
   background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, rgba(0, 0, 0, 0) 50%);
+}
+
+.light .hero-gradient {
+  background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.1) 0%, rgba(255, 255, 255, 0) 50%);
+}
+
+/* Light theme specific overrides for Tailwind prose */
+.light .prose {
+  --tw-prose-body: #374151;
+  --tw-prose-headings: #111827;
+  --tw-prose-links: #2563eb;
+  --tw-prose-bold: #111827;
+  --tw-prose-counters: #6b7280;
+  --tw-prose-bullets: #6b7280;
+  --tw-prose-hr: #e5e7eb;
+  --tw-prose-quotes: #374151;
+  --tw-prose-quote-borders: #e5e7eb;
+  --tw-prose-captions: #6b7280;
+  --tw-prose-code: #111827;
+  --tw-prose-pre-code: #e5e7eb;
+  --tw-prose-pre-bg: #1f2937;
+  --tw-prose-th-borders: #d1d5db;
+  --tw-prose-td-borders: #e5e7eb;
 }

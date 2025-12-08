@@ -12,48 +12,48 @@ export default function ContactForm({
     const [state, handleSubmit] = useForm("xpwvjdvb");
     if (state.succeeded) {
         return (
-            <div className="text-center p-8 bg-green-500/10 border border-green-500/20 rounded-xl">
-                <p className="text-green-400 font-medium text-lg">{successMessage}</p>
+            <div className="text-center p-8 bg-green-100 dark:bg-green-500/10 border border-green-300 dark:border-green-500/20 rounded-xl">
+                <p className="text-green-700 dark:text-green-400 font-medium text-lg">{successMessage}</p>
             </div>
         );
     }
     return (
         <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-2">
-                <label htmlFor="email" className="block text-sm font-medium text-gray-300">
+                <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {labelEmail}
                 </label>
                 <input
                     id="email"
                     type="email"
                     name="email"
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-white placeholder-gray-500"
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder={placeholderEmail}
                 />
                 <ValidationError
                     prefix="Email"
                     field="email"
                     errors={state.errors}
-                    className="text-red-400 text-sm mt-1"
+                    className="text-red-600 dark:text-red-400 text-sm mt-1"
                 />
             </div>
 
             <div className="space-y-2">
-                <label htmlFor="message" className="block text-sm font-medium text-gray-300">
+                <label htmlFor="message" className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                     {labelMessage}
                 </label>
                 <textarea
                     id="message"
                     name="message"
                     rows={4}
-                    className="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-white placeholder-gray-500"
+                    className="w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border border-gray-200 dark:border-white/10 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent outline-none transition-all text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
                     placeholder={placeholderMessage}
                 />
                 <ValidationError
                     prefix="Message"
                     field="message"
                     errors={state.errors}
-                    className="text-red-400 text-sm mt-1"
+                    className="text-red-600 dark:text-red-400 text-sm mt-1"
                 />
             </div>
 
@@ -67,3 +67,4 @@ export default function ContactForm({
         </form>
     );
 }
+

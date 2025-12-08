@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import CookieConsent from '@/components/CookieConsent';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -11,10 +12,12 @@ export const metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="scroll-smooth">
-      <body className={`${inter.className} min-h-screen bg-[#0a0a0a] text-white selection:bg-blue-500/30`}>
-        {children}
-        <CookieConsent />
+    <html lang="en" className="scroll-smooth dark" suppressHydrationWarning>
+      <body className={`${inter.className} min-h-screen bg-[var(--background)] text-[var(--foreground)] selection:bg-blue-500/30`}>
+        <ThemeProvider>
+          {children}
+          <CookieConsent />
+        </ThemeProvider>
       </body>
     </html>
   );

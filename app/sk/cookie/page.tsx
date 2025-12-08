@@ -2,9 +2,9 @@ import React from 'react';
 
 export default function CookiePageSK() {
     return (
-        <div className="min-h-screen bg-[#0a0a0a] pt-24 pb-12">
+        <div className="min-h-screen bg-white dark:bg-[#0a0a0a] pt-24 pb-12">
             <div className="container mx-auto px-6 max-w-4xl">
-                <div className="p-8 md:p-12 glass-panel rounded-2xl prose prose-invert max-w-none">
+                <div className="p-8 md:p-12 glass-panel rounded-2xl prose dark:prose-invert max-w-none">
                     <h1>Zásady používania súborov cookie pre euhub.sk</h1>
 
                     <h2>1. Čo sú súbory cookie?</h2>
@@ -52,7 +52,7 @@ export default function CookiePageSK() {
 
                     <h2>5. Kontaktujte nás</h2>
                     <p>
-                        Ak máte akékoľvek otázky týkajúce sa nášho používania súborov cookie, kontaktujte nás na adrese <a href="mailto:hello@ehub.sk" className="text-blue-400 hover:text-blue-300">hello@ehub.sk</a>.
+                        Ak máte akékoľvek otázky týkajúce sa nášho používania súborov cookie, kontaktujte nás na adrese <a href="mailto:hello@ehub.sk" className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300">hello@ehub.sk</a>.
                     </p>
                 </div>
             </div>

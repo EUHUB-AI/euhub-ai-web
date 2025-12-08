@@ -47,19 +47,19 @@ export default function CookieConsent() {
                     exit={{ y: 100, opacity: 0 }}
                     className="fixed bottom-0 left-0 right-0 z-[60] p-4 md:p-6"
                 >
-                    <div className="max-w-7xl mx-auto bg-[#0a0a0a]/95 backdrop-blur-xl border border-white/10 rounded-2xl shadow-2xl p-6 md:flex items-center justify-between gap-8">
+                    <div className="max-w-7xl mx-auto bg-white/95 dark:bg-[#0a0a0a]/95 backdrop-blur-xl border border-gray-200 dark:border-white/10 rounded-2xl shadow-2xl p-6 md:flex items-center justify-between gap-8">
                         <div className="flex-1 space-y-2 mb-4 md:mb-0">
-                            <h3 className="text-lg font-semibold text-white">{content.title}</h3>
-                            <p className="text-gray-400 text-sm leading-relaxed">
+                            <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{content.title}</h3>
+                            <p className="text-gray-600 dark:text-gray-400 text-sm leading-relaxed">
                                 {content.text}
                                 {' '}
-                                <Link href={content.linkHref} className="text-blue-400 hover:text-blue-300 underline">{content.linkText}</Link>.
+                                <Link href={content.linkHref} className="text-blue-600 dark:text-blue-400 hover:text-blue-500 dark:hover:text-blue-300 underline">{content.linkText}</Link>.
                             </p>
                         </div>
                         <div className="flex flex-col sm:flex-row gap-3 min-w-fit">
                             <button
                                 onClick={acceptNecessary}
-                                className="px-6 py-2.5 rounded-lg border border-white/10 text-gray-300 hover:bg-white/5 hover:text-white transition-colors text-sm font-medium"
+                                className="px-6 py-2.5 rounded-lg border border-gray-200 dark:border-white/10 text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-white/5 hover:text-gray-900 dark:hover:text-white transition-colors text-sm font-medium"
                             >
                                 {content.btnNecessary}
                             </button>
@@ -76,3 +76,4 @@ export default function CookieConsent() {
         </AnimatePresence>
     );
 }
+
