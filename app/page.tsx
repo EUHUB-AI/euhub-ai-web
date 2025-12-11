@@ -30,8 +30,8 @@ export default function Home() {
       <header className="fixed top-0 w-full z-50 glass-panel border-b border-gray-200 dark:border-white/5 bg-white/80 dark:bg-black/50">
         <div className="container mx-auto px-6 h-20 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-2">
-            <img src="https://euhub-ai.com/logo_dark.png" alt="EuHub AI" className="h-8 w-auto dark:block hidden" />
-            <img src="https://euhub-ai.com/logo_light.png" alt="EuHub AI" className="h-8 w-auto dark:hidden block" />
+            <img src="/logo_dark.png" alt="EuHub AI" className="h-8 w-auto dark:block hidden" />
+            <img src="/logo_light.png" alt="EuHub AI" className="h-8 w-auto dark:hidden block" />
           </Link>
           <nav className="hidden md:flex items-center gap-8 text-sm font-medium text-black dark:text-gray-300">
             <Link href="#services" className="hover:text-blue-600 dark:hover:text-white transition-colors">Services</Link>
@@ -197,7 +197,7 @@ export default function Home() {
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
               <img src="/logo_dark.png" alt="EuHub AI" className="h-10 w-auto mb-4 mx-auto md:mx-0 opacity-80 overflow-hidden dark:block hidden" />
-              <img src="https://euhub-ai.com/logo_light.png" alt="EuHub AI" className="h-10 w-auto mb-4 mx-auto md:mx-0 opacity-80 overflow-hidden dark:hidden block" />
+              <img src="/logo_light.png" alt="EuHub AI" className="h-10 w-auto mb-4 mx-auto md:mx-0 opacity-80 overflow-hidden dark:hidden block" />
               <p className="text-gray-500 text-sm">Your partner for digital transformation <br />and automation in the EU</p>
             </div>
 
