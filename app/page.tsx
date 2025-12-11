@@ -196,7 +196,7 @@ export default function Home() {
         <div className="container mx-auto px-6">
           <div className="flex flex-col md:flex-row justify-between items-center gap-8">
             <div className="text-center md:text-left">
-              <img src="https://euhub-ai.com/logo_dark.png" alt="EuHub AI" className="h-10 w-auto mb-4 mx-auto md:mx-0 opacity-80 overflow-hidden dark:block hidden" />
+              <img src="/logo_dark.png" alt="EuHub AI" className="h-10 w-auto mb-4 mx-auto md:mx-0 opacity-80 overflow-hidden dark:block hidden" />
               <img src="https://euhub-ai.com/logo_light.png" alt="EuHub AI" className="h-10 w-auto mb-4 mx-auto md:mx-0 opacity-80 overflow-hidden dark:hidden block" />
               <p className="text-gray-500 text-sm">Your partner for digital transformation <br />and automation in the EU</p>
             </div>
