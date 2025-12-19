@@ -15,8 +15,7 @@ env:
   SERVICE_NAME: euhub-ai
   ARTIFACT_REGISTRY: europe-west1-docker.pkg.dev/euhub-chatbot/euhub-ai
   IMAGE_NAME: euhub-ai
-  # Prefer setting this as a GitHub Actions variable (Settings → Secrets and variables → Actions → Variables)
-  RUNTIME_SERVICE_ACCOUNT: ${{ vars.RUNTIME_SERVICE_ACCOUNT }}
+  RUNTIME_SERVICE_ACCOUNT: "euhub-bot-runtime@euhub-chatbot.iam.gserviceaccount.com"
 
 jobs:
   ci:
@@ -105,6 +104,7 @@ jobs:
               --region=${{ env.REGION }} \
               --project=${{ env.PROJECT_ID }} \
               --platform=managed \
+              --service-account=${{ env.RUNTIME_SERVICE_ACCOUNT }} \
               --memory=1Gi \
               --cpu=1 \
               --timeout=3600 \
