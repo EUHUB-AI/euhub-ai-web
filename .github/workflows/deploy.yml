@@ -1,83 +1,136 @@
-name: Web App Deployment
+name: CI/CD - Web App
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  id-token: write
+
 env:
-  PROJECT_ID: "webapp-473913"
-  REGION: "europe-west1"
-  REPO_NAME: "euhub-ai-web"
-  IMAGE_NAME: "euhub-ai-web"
-  SERVICE_NAME: "euhub-ai-web"
+  PROJECT_ID: euhub-chatbot
+  REGION: europe-west1
+  SERVICE_NAME: euhub-ai
+  ARTIFACT_REGISTRY: europe-west1-docker.pkg.dev/euhub-chatbot/euhub-ai
+  IMAGE_NAME: euhub-ai
+  # Prefer setting this as a GitHub Actions variable (Settings → Secrets and variables → Actions → Variables)
+  RUNTIME_SERVICE_ACCOUNT: ${{ vars.RUNTIME_SERVICE_ACCOUNT }}
 
 jobs:
   ci:
-    name: Build and Push
+    name: Build & Push
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
     outputs:
-      image_digest: ${{ steps.build-push.outputs.digest }}
-      image_tag: ${{ steps.image-tag.outputs.tag }}
-
+      image_digest: ${{ steps.build.outputs.digest }}
+    
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
       - name: Authenticate to Google Cloud
         id: auth
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+          token_format: access_token
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+
+      - name: Login to Artifact Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ${{ env.REGION }}-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
-      - name: Configure Docker
-        run: gcloud auth configure-docker ${{ env.REGION }}-docker.pkg.dev
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
 
-      - name: Generate Image Tag
-        id: image-tag
-        run: echo "tag=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.REPO_NAME }}/${{ env.IMAGE_NAME }}:${{ github.sha }}" >> $GITHUB_OUTPUT
-
-      - name: Build and Push Docker Image
-        id: build-push
+      - name: Build and Push Docker image
+        id: build
         uses: docker/build-push-action@v5
         with:
           context: .
           push: true
-          tags: ${{ steps.image-tag.outputs.tag }}
+          tags: |
+            ${{ env.ARTIFACT_REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+            ${{ env.ARTIFACT_REGISTRY }}/${{ env.IMAGE_NAME }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
           provenance: false
 
   cd:
     name: Deploy to Cloud Run
     needs: ci
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
-
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Authenticate to Google Cloud
-        id: auth
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GOOGLE_CREDENTIALS }}
+          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
+          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
+      - name: Verify required config
+        run: |
+          test -n "${{ env.RUNTIME_SERVICE_ACCOUNT }}" || (echo "Missing Actions variable: RUNTIME_SERVICE_ACCOUNT" && exit 1)
+          test -n "${{ secrets.WIF_PROVIDER }}" || (echo "Missing Actions secret: WIF_PROVIDER" && exit 1)
+          test -n "${{ secrets.WIF_SERVICE_ACCOUNT }}" || (echo "Missing Actions secret: WIF_SERVICE_ACCOUNT" && exit 1)
+
       - name: Deploy to Cloud Run
         run: |
-          gcloud run deploy ${{ env.SERVICE_NAME }} \
-            --image ${{ needs.ci.outputs.image_tag }} \
-            --region ${{ env.REGION }} \
-            --platform managed \
-            --allow-unauthenticated
+          IMAGE="${{ env.ARTIFACT_REGISTRY }}/${{ env.IMAGE_NAME }}"
+          DIGEST="${{ needs.ci.outputs.image_digest }}"
+          
+          # Check if service exists
+          if gcloud run services describe ${{ env.SERVICE_NAME }} \
+            --region=${{ env.REGION }} \
+            --project=${{ env.PROJECT_ID }} \
+            --format="value(name)" 2>/dev/null; then
+            
+            # Service exists - update image and ensure context/persistence config
+            echo "Service exists, updating image and configuration..."
+            gcloud run deploy ${{ env.SERVICE_NAME }} \
+              --image="${IMAGE}@${DIGEST}" \
+              --region=${{ env.REGION }} \
+              --project=${{ env.PROJECT_ID }} \
+              --platform=managed \
+              --memory=1Gi \
+              --cpu=1 \
+              --timeout=3600 \
+              --max-instances=10 \
+              --quiet
+          else
+            # Service doesn't exist - create with full configuration
+            echo "Service doesn't exist, creating with full configuration..."
+            gcloud run deploy ${{ env.SERVICE_NAME }} \
+              --image="${IMAGE}@${DIGEST}" \
+              --region=${{ env.REGION }} \
+              --project=${{ env.PROJECT_ID }} \
+              --platform=managed \
+              --allow-unauthenticated \
+              --service-account=${{ env.RUNTIME_SERVICE_ACCOUNT }} \
+              --port=3000 \
+              --memory=1Gi \
+              --cpu=1 \
+              --timeout=3600 \
+              --min-instances=0 \
+              --max-instances=10 \
+              --quiet
+          fi
+
+          gcloud run services update-traffic ${{ env.SERVICE_NAME }} \
+            --to-latest \
+            --region=${{ env.REGION }} \
+            --project=${{ env.PROJECT_ID }} \
+            --quiet

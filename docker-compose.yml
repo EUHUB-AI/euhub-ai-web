@@ -1,0 +1,32 @@
+services:
+  web:
+    container_name: euhub-ai-web
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    restart: always
+    healthcheck:
+      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:3000" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+  # Development service (requires node_modules to be installed or mounted)
+  # Uncomment if you want to run in dev mode with hot reload
+  # dev:
+  #   container_name: euhub-ai-web-dev
+  #   image: node:22-alpine
+  #   working_dir: /app
+  #   volumes:
+  #     - .:/app
+  #     - /app/node_modules
+  #     - /app/.next
+  #   ports:
+  #     - "3001:3000"
+  #   command: npm run dev
+  #   environment:
+  #     - NODE_ENV=development
