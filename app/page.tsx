@@ -4,7 +4,7 @@ import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { ArrowRight, CheckCircle2, Shield, Zap, BarChart3, Database, Globe } from 'lucide-react';
+import { ArrowRight, CheckCircle2, Shield, Zap, BarChart3, Database, Globe, FileText } from 'lucide-react';
 import ContactForm from '@/components/ContactForm';
 import ThemeToggle from '@/components/ThemeToggle';
 import LanguageSwitcher from '@/components/LanguageSwitcher';
@@ -24,6 +24,11 @@ const staggerContainer = {
 };
 
 export default function Home() {
+  const handleDownload = (e: React.MouseEvent) => {
+    e.preventDefault();
+    alert("Lead Magnet Modal to be implemented");
+  };
+
   return (
     <div className="flex flex-col min-h-screen">
       {/* Header */}
@@ -75,16 +80,19 @@ export default function Home() {
               </h1>
 
               <p className="text-xl text-gray-600 dark:text-gray-400 max-w-2xl mx-auto leading-relaxed">
-                We don't just write code. We engineer agentic AI systems that scale with your governance requirements. Secure. Compliant. Future-proof.
+                Maintain full control over your risks. Our audit identifies vulnerabilities in your infrastructure and AI potential before they become liabilities.
               </p>
 
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-8">
-                <Link href="#contact" className="px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-black font-semibold rounded-full hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors flex items-center gap-2">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-center justify-center mt-8">
+                <Link href="#contact" className="px-8 py-4 bg-gray-900 dark:bg-white text-white dark:text-black font-semibold rounded-full hover:bg-gray-700 dark:hover:bg-gray-100 transition-colors flex items-center justify-center gap-2">
                   Start Strategic Audit <ArrowRight className="w-4 h-4" />
                 </Link>
-                <Link href="#services" className="px-8 py-4 glass-panel text-black dark:text-white font-semibold rounded-full border border-gray-300 dark:border-transparent hover:bg-gray-100 dark:hover:bg-white/10 transition-colors">
-                  Our Services
-                </Link>
+                <button
+                  onClick={handleDownload}
+                  className="px-8 py-4 bg-transparent border border-gray-900 dark:border-white text-gray-900 dark:text-white font-semibold rounded-full hover:bg-gray-900/5 dark:hover:bg-white/5 transition-colors flex items-center justify-center gap-2 text-sm sm:text-base opacity-80 hover:opacity-100"
+                >
+                  <FileText className="w-4 h-4" /> Download Compliance Checklist
+                </button>
               </div>
             </motion.div>
           </div>
@@ -141,6 +149,60 @@ export default function Home() {
           </div>
         </section>
 
+        {/* Team Section */}
+        <section id="team" className="py-24 bg-white dark:bg-black">
+          <div className="container mx-auto px-6 text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="mb-16"
+            >
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">Meet Our Experts</h2>
+              <p className="text-gray-600 dark:text-gray-400 max-w-xl mx-auto">The brains behind your strategic AI implementation.</p>
+            </motion.div>
+
+            <div className="grid md:grid-cols-3 gap-12">
+              {[
+                {
+                  name: "Michal Kováč",
+                  role: "Chief AI Solutions Architect",
+                  image: "/team-1.png",
+                  desc: "Specialist in large-scale RAG systems and multi-agent governance."
+                },
+                {
+                  name: "Zuzana Horváthová",
+                  role: "Head of AI Compliance",
+                  image: "/team-2.png",
+                  desc: "Legal expert specializing in the EU AI Act and ethical AI deployment."
+                },
+                {
+                  name: "Jakub Molnár",
+                  role: "Infrastructure & Security Lead",
+                  image: "/team-3.png",
+                  desc: "Focuses on private cloud LLM deployments and SOC2-compliant pipelines."
+                }
+              ].map((member, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: i * 0.1 }}
+                  className="flex flex-col items-center group"
+                >
+                  <div className="relative w-48 h-48 mb-6 overflow-hidden rounded-full border-2 border-blue-500/20 group-hover:border-blue-500/50 transition-colors">
+                    <img src={member.image} alt={member.name} className="object-cover w-full h-full transform group-hover:scale-110 transition-transform duration-500" />
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-1">{member.name}</h3>
+                  <p className="text-blue-600 dark:text-blue-400 font-medium mb-3">{member.role}</p>
+                  <p className="text-gray-600 dark:text-gray-400 text-sm">{member.desc}</p>
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* Contact/CTA Section */}
         <section id="contact" className="py-24 relative overflow-hidden">
           <div className="absolute inset-0 bg-blue-100/30 dark:bg-blue-900/10 radial-gradient-center"></div>
@@ -184,6 +246,14 @@ export default function Home() {
                 <div className="relative glass-panel p-8 md:p-10 rounded-3xl border border-gray-200 dark:border-white/10">
                   <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Get a Free Audit</h3>
                   <p className="text-gray-600 dark:text-gray-400 mb-8">Fill out the form below and our team will get back to you within 24 hours.</p>
+
+                  <div className="mb-8 text-center sm:text-left">
+                    <p className="text-sm text-gray-500 dark:text-gray-400">
+                      Ready to scale? Book your audit below.<br />
+                      Still researching? <a href="#" className="underline decoration-dashed hover:text-blue-600 dark:hover:text-blue-400 transition-colors">Read our guide on High-Risk AI Systems under EU Law</a> instead.
+                    </p>
+                  </div>
+
                   <ContactForm />
                 </div>
               </div>
