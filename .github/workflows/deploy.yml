@@ -77,9 +77,11 @@ jobs:
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Verify required config
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
         run: |
           test -n "${{ env.RUNTIME_SERVICE_ACCOUNT }}" || (echo "Missing variable: RUNTIME_SERVICE_ACCOUNT" && exit 1)
-          test -n "${{ secrets.GCP_SA_KEY }}" || (echo "Missing secret: GCP_SA_KEY" && exit 1)
+          test -n "$GCP_SA_KEY" || (echo "Missing secret: GCP_SA_KEY" && exit 1)
 
       - name: Deploy to Cloud Run
         run: |
