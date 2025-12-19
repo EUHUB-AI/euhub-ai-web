@@ -31,9 +31,8 @@ jobs:
         id: auth
         uses: google-github-actions/auth@v2
         with:
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
           token_format: access_token
-          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
-          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
 
       - name: Login to Artifact Registry
         uses: docker/login-action@v3
@@ -74,17 +73,15 @@ jobs:
       - name: Authenticate to Google Cloud
         uses: google-github-actions/auth@v2
         with:
-          workload_identity_provider: ${{ secrets.WIF_PROVIDER }}
-          service_account: ${{ secrets.WIF_SERVICE_ACCOUNT }}
+          credentials_json: ${{ secrets.GCP_SA_KEY }}
 
       - name: Set up Cloud SDK
         uses: google-github-actions/setup-gcloud@v2
 
       - name: Verify required config
         run: |
-          test -n "${{ env.RUNTIME_SERVICE_ACCOUNT }}" || (echo "Missing Actions variable: RUNTIME_SERVICE_ACCOUNT" && exit 1)
-          test -n "${{ secrets.WIF_PROVIDER }}" || (echo "Missing Actions secret: WIF_PROVIDER" && exit 1)
-          test -n "${{ secrets.WIF_SERVICE_ACCOUNT }}" || (echo "Missing Actions secret: WIF_SERVICE_ACCOUNT" && exit 1)
+          test -n "${{ env.RUNTIME_SERVICE_ACCOUNT }}" || (echo "Missing variable: RUNTIME_SERVICE_ACCOUNT" && exit 1)
+          test -n "${{ secrets.GCP_SA_KEY }}" || (echo "Missing secret: GCP_SA_KEY" && exit 1)
 
       - name: Deploy to Cloud Run
         run: |
@@ -97,7 +94,7 @@ jobs:
             --project=${{ env.PROJECT_ID }} \
             --format="value(name)" 2>/dev/null; then
             
-            # Service exists - update image and ensure context/persistence config
+            # Service exists - update image and ensure correct configuration
             echo "Service exists, updating image and configuration..."
             gcloud run deploy ${{ env.SERVICE_NAME }} \
               --image="${IMAGE}@${DIGEST}" \
